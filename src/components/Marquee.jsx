@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { Observer } from "gsap/all";
 import { useEffect, useRef } from "react";
 gsap.registerPlugin(Observer);
+
 const Marquee = ({
   items,
   className = "text-white bg-black",
@@ -31,15 +32,15 @@ const Marquee = ({
       curIndex = 0,
       pixelsPerSecond = (config.speed || 1) * 100,
       snap =
-        config.snap === false ? (v) => v : gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
+        config.snap === false ? (v) => v : gsap.utils.snap(config.snap || 1),
       totalWidth,
       curX,
       distanceToStart,
       distanceToLoop,
       item,
       i;
+
     gsap.set(items, {
-      // convert "x" to "xPercent" to make things responsive, and populate the widths/xPercents Arrays to make lookups faster.
       xPercent: (i, el) => {
         let w = (widths[i] = parseFloat(gsap.getProperty(el, "width", "px")));
         xPercents[i] = snap(
@@ -50,6 +51,7 @@ const Marquee = ({
       },
     });
     gsap.set(items, { x: 0 });
+
     totalWidth =
       items[length - 1].offsetLeft +
       (xPercents[length - 1] / 100) * widths[length - 1] -
@@ -57,12 +59,14 @@ const Marquee = ({
       items[length - 1].offsetWidth *
         gsap.getProperty(items[length - 1], "scaleX") +
       (parseFloat(config.paddingRight) || 0);
+
     for (i = 0; i < length; i++) {
       item = items[i];
       curX = (xPercents[i] / 100) * widths[i];
       distanceToStart = item.offsetLeft + curX - startX;
       distanceToLoop =
         distanceToStart + widths[i] * gsap.getProperty(item, "scaleX");
+
       tl.to(
         item,
         {
@@ -87,16 +91,17 @@ const Marquee = ({
           distanceToLoop / pixelsPerSecond
         )
         .add("label" + i, distanceToStart / pixelsPerSecond);
+
       times[i] = distanceToStart / pixelsPerSecond;
     }
+
     function toIndex(index, vars) {
       vars = vars || {};
       Math.abs(index - curIndex) > length / 2 &&
-        (index += index > curIndex ? -length : length); // always go in the shortest direction
+        (index += index > curIndex ? -length : length);
       let newIndex = gsap.utils.wrap(0, length, index),
         time = times[newIndex];
       if (time > tl.time() !== index > curIndex) {
-        // if we're wrapping the timeline's playhead, make the proper adjustments
         vars.modifiers = { time: gsap.utils.wrap(0, tl.duration()) };
         time += tl.duration() * (index > curIndex ? 1 : -1);
       }
@@ -104,12 +109,14 @@ const Marquee = ({
       vars.overwrite = true;
       return tl.tweenTo(time, vars);
     }
+
     tl.next = (vars) => toIndex(curIndex + 1, vars);
     tl.previous = (vars) => toIndex(curIndex - 1, vars);
     tl.current = () => curIndex;
     tl.toIndex = (index, vars) => toIndex(index, vars);
     tl.times = times;
-    tl.progress(1, true).progress(0, true); // pre-render for performance
+    tl.progress(1, true).progress(0, true);
+
     if (config.reversed) {
       tl.vars.onReverseComplete();
       tl.reverse();
@@ -120,7 +127,7 @@ const Marquee = ({
   useEffect(() => {
     const tl = horizontalLoop(itemsRef.current, {
       repeat: -1,
-      paddingRight: 30,
+      paddingRight: 150, // ⬅ Increased from 30 to 150px for proper spacing
       reversed: reverse,
     });
 
@@ -132,9 +139,7 @@ const Marquee = ({
         }
         gsap
           .timeline({
-            defaults: {
-              ease: "none",
-            },
+            defaults: { ease: "none" },
           })
           .to(tl, { timeScale: factor * 2.5, duration: 0.2, overwrite: true })
           .to(tl, { timeScale: factor / 2.5, duration: 1 }, "+=0.3");
@@ -142,6 +147,7 @@ const Marquee = ({
     });
     return () => tl.kill();
   }, [items, reverse]);
+
   return (
     <div
       ref={containerRef}
@@ -152,7 +158,7 @@ const Marquee = ({
           <span
             key={index}
             ref={(el) => (itemsRef.current[index] = el)}
-            className="flex items-center px-16 gap-x-32"
+            className="flex items-center px-24 gap-x-48 min-w-max" // ⬅ Bigger gap & min-w-max to prevent squish
           >
             {text} <Icon icon={icon} className={iconClassName} />
           </span>

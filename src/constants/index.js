@@ -176,7 +176,7 @@ export const achievements = [
     title: "Shining Star Award",
     description:
       "Awarded by college for outstanding innovation in IoT, embedded systems, and software solutions throughout the academic year.",
-    image: "/assets/achievements/shining-star.png",
+    image: "/assets/projects/shining-star.jpg",
     bgImage: "/assets/backgrounds/star-bg.jpg",
   },
   {
@@ -184,7 +184,7 @@ export const achievements = [
     title: "3rd Place – HackFest IIIT BBSR",
     description:
       "Recognized for developing a real-time prototype under pressure that addressed a social issue using IoT and AI during HackFest 2024.",
-    image: "/assets/achievements/hackfest.png",
+    image: "/assets/projects/hackfest.jpg",
     bgImage: "/assets/backgrounds/hackathon-bg.jpg",
   },
   {
@@ -192,7 +192,7 @@ export const achievements = [
     title: "Startup Cohort – ThingQbator",
     description:
       "Selected under NASSCOM’s startup incubation program for Klarvick Helm & Arca Nova — IoT-based solutions with strong societal impact.",
-    image: "/assets/achievements/cohort.png",
+    image: "/assets/projects/cohort.jpg",
     bgImage: "/assets/backgrounds/startup-bg.jpg",
   },
 ];
