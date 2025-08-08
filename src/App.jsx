@@ -6,7 +6,7 @@ import Services from "./sections/Services";
 import ReactLenis from "lenis/react";
 import About from "./sections/About";
 import Works from "./sections/Works";
-import Achievements from "./sections/Achievements"; // ✅ Make sure this file exists
+import Achievements from "./sections/Achievements";
 import ContactSummary from "./sections/ContactSummary";
 import Contact from "./sections/Contact";
 import { useProgress } from "@react-three/drei";
@@ -17,25 +17,42 @@ const App = () => {
 
   useEffect(() => {
     if (progress === 100) {
-      setIsReady(true);
+      // Add a short delay so the message is visible for a moment
+      setTimeout(() => setIsReady(true), 800);
     }
   }, [progress]);
 
   return (
     <ReactLenis root className="relative w-screen min-h-screen overflow-x-auto">
       {!isReady && (
-        <div className="fixed inset-0 z-[999] flex flex-col items-center justify-center bg-black text-white transition-opacity duration-700 font-light">
-          <p className="mb-4 text-xl tracking-widest animate-pulse">
-            Loading {Math.floor(progress)}%
+        <div className="fixed inset-0 z-[999] flex flex-col items-center justify-center bg-black text-white font-light text-center p-6">
+          {/* Fun icon or emoji */}
+          <div className="text-5xl mb-4 animate-bounce">💻</div>
+          
+          {/* Main message */}
+          <h1 className="text-3xl md:text-4xl font-semibold mb-2">
+            Best Experienced on a Laptop / PC
+          </h1>
+          <p className="text-sm md:text-lg text-gray-300 max-w-md">
+            This portfolio is designed for an immersive desktop view —  
+            switch to a bigger screen for the full magic 
           </p>
-          <div className="relative h-1 overflow-hidden rounded w-60 bg-white/20">
+
+          {/* Optional subtle loader below */}
+          <div className="mt-6 w-48 h-1 bg-white/20 rounded overflow-hidden">
             <div
-              className="absolute top-0 left-0 h-full transition-all duration-300 bg-white"
+              className="h-full bg-white transition-all duration-300"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
+
+          {/* Progress percentage */}
+          <p className="mt-2 text-sm tracking-widest animate-pulse">
+            Loading {Math.floor(progress)}%
+          </p>
         </div>
       )}
+
       <div
         className={`${
           isReady ? "opacity-100" : "opacity-0"
@@ -47,7 +64,7 @@ const App = () => {
         <Services />
         <About />
         <Works />
-        <Achievements /> {/* ✅ Correct usage */}
+        <Achievements />
         <ContactSummary />
         <Contact />
       </div>
