@@ -9,7 +9,7 @@ const About = () => {
     that integrate software precision  
     with real-world hardware intelligence.`;
 
-  const aboutText = `I'm a full-stack developer and IoT systems engineer focused on building end-to-end solutions that are fast, resilient, and purpose-driven. With experience in React, Node.js, MongoDB, and microcontroller-based architectures, I develop applications that perform reliably from frontend interfaces to embedded sensor networks.
+  const aboutText = `I'm Shubhangam Biswal a full-stack developer and IoT systems engineer focused on building end-to-end solutions that are fast, resilient, and purpose-driven. With experience in React, Node.js, MongoDB, and microcontroller-based architectures, I develop applications that perform reliably from frontend interfaces to embedded sensor networks.
 
 My work spans cloud-connected platforms, real-time tracking systems, GIS-based infrastructure tools, and secure communication protocols. Whether optimizing a RESTful API or architecting an edge AI pipeline, I prioritize clean code, scalable design, and measurable impact.`;
 
